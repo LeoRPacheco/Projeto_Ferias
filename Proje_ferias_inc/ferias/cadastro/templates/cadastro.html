@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'cadastro/css/cadastro.css' %}">
+{% endblock %}
+
+{% block 'dashboard' %}
+    <div class="container">
+        <div class="row">
+            <div onclick="exibir_form('1')" class="col-md card-dashboard">
+                <p clas="text-card">Incluir Férias</p>
+            </div>
+
+            <div onclick="exibir_form('2')" class="col-md card-dashboard">
+                <p clas="text-card">Atualizar férias</p>
+            </div>
+        </div>
+
+        <div id="adicionar-cadastro" class="adicionar-cadastro">
+            <form action="{% url 'cadastro' %}" method="POST">{% csrf_token %}
+                <div class ="row">
+                    <div class="col-md">
+                        <p>Nome:</p>
+                        <input type="text" class="form-control" placeholder="Nome Completo" name="nome">
+                    </div>
+                    <div class="col-md">
+                        <p>Matrícula:</p>
+                        <input type="text" class="form-control" placeholder="C______-_" name="matricula">
+                    </div>
+                </div>
+                <br>
+                <div class ="row">
+                    <div class="col-md">
+                        <p>Data de início:</p>
+                        <input type="date" class="form-control" name="data_in">
+                    </div>
+                    <div class="col-md">
+                        <p>Quantidade de dias:</p>
+                        <input type="number" class="form-control" name="dias">
+                    </div>
+                </div>
+                <br>
+                <p>Departamento:</p>
+                <input type="text" class="form-control" name="departamento">
+                <br>
+                <hr style="background-color:gray;">
+                </div>
+      
+                <br>
+                <input type="submit" value="Cadastrar" class="btn-principal">
+      
+            </form>
+            
+        </div>
+
+        <div class="container">
+            <div id="att_cadastro">
+                <p></p>
+                <select id="cadastro-select" onchange="dados_cadastro()" class="form-control">
+                    <option value=""></option>
+                    {% for Férias in cadastro %}
+                    <option value="{{Férias.id}}">{{Férias.nome}}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <hr>
+
+                <div id="form-att-cadastro">
+                    <p>Nome:</p>
+                    <input id="nome" type="text" class='form-control'>
+                    <p>Matrícula:</p>
+                    <input id="matricula" type="text" class='form-control'>
+                    <p>Data de início:</p>
+                    <input id="data_in" type="text" class='form-control'>
+                    <p>Quantidade de dias:</p>
+                    <input id="dias" type="text" class='form-control'>
+                    <br>
+                    <input onclick="update_cliente()"  type="submit" value="salvar" class="btn btn-success" > 
+                    <hr style="background-color: gray;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'cadastro/js/cadastro.js' %}"></script>
+{% endblock %}
